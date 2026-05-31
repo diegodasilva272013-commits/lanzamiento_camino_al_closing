@@ -23,10 +23,11 @@ export const metadata: Metadata = {
     locale: 'es_AR',
     images: [
       {
-        url: '/logo_original.png',
+        url: '/og-image.jpg',
         width: 1200,
-        height: 1200,
-        alt: 'Camino al Closing',
+        height: 630,
+        alt: 'Camino al Closing — 1 al 5 de junio',
+        type: 'image/jpeg',
       },
     ],
   },
@@ -34,7 +35,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title,
     description,
-    images: ['/logo_original.png'],
+    images: ['/og-image.jpg'],
   },
 };
 
