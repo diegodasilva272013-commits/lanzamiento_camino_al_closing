@@ -1,6 +1,12 @@
+import type { Metadata } from 'next';
 import Link from 'next/link';
 import { cookies } from 'next/headers';
 import { Activity, ArrowUpRight, MessageCircleMore, RefreshCw, SendHorizonal } from 'lucide-react';
+
+export const metadata: Metadata = {
+  title: 'Panel interno · Difusión',
+  robots: { index: false, follow: false, nocache: true, googleBot: { index: false, follow: false } },
+};
 import { LoginCard } from '@/components/difusion/login-card';
 import { CampaignConsole } from '@/components/difusion/campaign-console';
 import { ReplyForm } from '@/components/difusion/reply-form';
