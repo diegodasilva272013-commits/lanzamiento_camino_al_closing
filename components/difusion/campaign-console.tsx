@@ -46,12 +46,19 @@ function chunk<T>(items: T[], size: number) {
   return chunks;
 }
 
-export function CampaignConsole({ defaultTemplateSid }: { defaultTemplateSid: string }) {
+export function CampaignConsole({
+  defaultTemplateSid,
+  defaultLandingUrl,
+}: {
+  defaultTemplateSid: string;
+  defaultLandingUrl: string;
+}) {
   const [file, setFile] = useState<File | null>(null);
   const [limit, setLimit] = useState(1000);
   const [batchSize, setBatchSize] = useState(10);
   const [pauseMs, setPauseMs] = useState(800);
   const [templateSid, setTemplateSid] = useState(defaultTemplateSid);
+  const [landingUrl, setLandingUrl] = useState(defaultLandingUrl);
   const [preparing, setPreparing] = useState(false);
   const [sending, setSending] = useState(false);
   const [prepared, setPrepared] = useState<PreparedCampaignResult | null>(null);
@@ -115,7 +122,7 @@ export function CampaignConsole({ defaultTemplateSid }: { defaultTemplateSid: st
         const res = await fetch('/api/difusion/send-batch', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ contacts: contactsChunk, templateSid }),
+          body: JSON.stringify({ contacts: contactsChunk, templateSid, landingUrl }),
         });
 
         const data = (await res.json()) as { results?: SendResult[]; error?: string };
@@ -179,6 +186,21 @@ export function CampaignConsole({ defaultTemplateSid }: { defaultTemplateSid: st
               />
             </label>
           </div>
+
+          <label className="grid gap-1.5 text-left">
+            <span className="text-xs font-medium uppercase tracking-[0.2em] text-brand-muted">
+              Link de landing ({'{{2}}'})
+            </span>
+            <input
+              value={landingUrl}
+              onChange={(event) => setLandingUrl(event.target.value)}
+              placeholder="https://..."
+              className="rounded-xl border border-[rgba(212,175,55,0.25)] bg-black/60 px-4 py-3 text-sm text-brand-text outline-none transition focus:border-brand-gold focus:ring-2 focus:ring-[rgba(212,175,55,0.25)]"
+            />
+            <span className="text-[11px] text-brand-muted">
+              Si tu plantilla aprobada usa {'{{2}}'} como link, se reemplaza con esta URL. Si la plantilla no tiene {'{{2}}'}, dejá el campo vacío.
+            </span>
+          </label>
 
           <div className="flex flex-col gap-3 sm:flex-row">
             <button

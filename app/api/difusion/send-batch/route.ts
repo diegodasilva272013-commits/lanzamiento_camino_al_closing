@@ -21,10 +21,12 @@ export async function POST(req: Request) {
   const body = (await req.json().catch(() => null)) as {
     contacts?: ContactInput[];
     templateSid?: string;
+    landingUrl?: string;
   } | null;
 
   const contacts = body?.contacts ?? [];
   const templateSid = String(body?.templateSid ?? '').trim();
+  const landingUrl = String(body?.landingUrl ?? process.env.LANDING_URL ?? '').trim();
 
   if (!templateSid) {
     return NextResponse.json({ error: 'Falta el Template SID.' }, { status: 400 });
@@ -38,12 +40,17 @@ export async function POST(req: Request) {
 
   for (const contact of contacts) {
     try {
+      const contentVariables: Record<string, string> = {
+        '1': sanitizeFirstName(contact.firstName),
+      };
+      if (landingUrl) {
+        contentVariables['2'] = landingUrl;
+      }
+
       const sent = await sendTemplateWhatsappMessage({
         to: contact.phone,
         contentSid: templateSid,
-        contentVariables: {
-          '1': sanitizeFirstName(contact.firstName),
-        },
+        contentVariables,
       });
 
       results.push({
