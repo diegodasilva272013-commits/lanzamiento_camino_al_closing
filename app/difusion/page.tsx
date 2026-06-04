@@ -49,7 +49,7 @@ export default async function DifusionPage({
   const deliveredCount = messages.filter((item) => item.status === 'delivered').length;
   const inboundCount = messages.filter((item) => item.to === getWhatsappSender()).length;
   const defaultTemplateSid = process.env.TWILIO_BROADCAST_TEMPLATE_SID ?? 'HX1e552a71ab82179c62514e3488d15ae7';
-  const defaultLandingUrl = process.env.LANDING_URL ?? 'https://lanzamiento-camino-al-closing.vercel.app/lanzamiento';
+  const defaultLandingUrl = process.env.LANDING_URL ?? '';
 
   return (
     <main className="min-h-screen bg-brand-black px-4 py-8 text-brand-text sm:px-6 lg:px-8">
