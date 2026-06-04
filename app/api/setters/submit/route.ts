@@ -5,6 +5,7 @@ type Payload = {
   mensajes?: unknown;
   lineas?: unknown;
   contactados?: unknown;
+  accessCode?: unknown;
 };
 
 function asString(value: unknown): string {
@@ -21,6 +22,11 @@ export async function POST(req: Request) {
     body = (await req.json()) as Payload;
   } catch {
     return NextResponse.json({ ok: false, error: 'JSON inválido.' }, { status: 400 });
+  }
+
+  const expectedCode = process.env.SETTERS_ACCESS_CODE;
+  if (expectedCode && asString(body.accessCode) !== expectedCode) {
+    return NextResponse.json({ ok: false, error: 'Código de acceso inválido.' }, { status: 401 });
   }
 
   const setter = asString(body.setter);

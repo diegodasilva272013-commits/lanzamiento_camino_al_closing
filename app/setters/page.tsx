@@ -8,7 +8,36 @@ export const metadata: Metadata = {
   robots: { index: false, follow: false, nocache: true, googleBot: { index: false, follow: false } },
 };
 
-export default function SettersReportPage() {
+function isAuthorized(searchParams?: { c?: string }) {
+  const expected = process.env.SETTERS_ACCESS_CODE;
+  // Si no hay código configurado, dejamos pasar (modo dev / setup inicial).
+  if (!expected) return true;
+  return (searchParams?.c ?? '') === expected;
+}
+
+export default function SettersReportPage({
+  searchParams,
+}: {
+  searchParams?: { c?: string };
+}) {
+  if (!isAuthorized(searchParams)) {
+    return (
+      <main className="min-h-screen bg-brand-black px-4 py-16 text-brand-text sm:px-6 lg:px-8">
+        <div className="mx-auto flex max-w-md flex-col items-start gap-6 rounded-[2rem] border border-[rgba(212,175,55,0.18)] bg-white/5 p-8 backdrop-blur">
+          <BrandLogo size="md" priority />
+          <div>
+            <p className="text-xs uppercase tracking-[0.28em] text-brand-gold">Acceso restringido</p>
+            <h1 className="mt-2 text-2xl font-semibold">Este link no es válido</h1>
+            <p className="mt-3 text-sm leading-relaxed text-brand-muted">
+              Este formulario es solo para los setters del equipo. Pedile a Diego el link
+              completo con tu código de acceso.
+            </p>
+          </div>
+        </div>
+      </main>
+    );
+  }
+
   return (
     <main className="min-h-screen bg-brand-black px-4 py-10 text-brand-text sm:px-6 lg:px-8">
       <div className="mx-auto max-w-3xl">

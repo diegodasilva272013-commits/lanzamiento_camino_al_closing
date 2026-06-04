@@ -1,6 +1,6 @@
 'use client';
 
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { Loader2, Send } from 'lucide-react';
 
 const MENSAJES = 5;
@@ -11,8 +11,15 @@ export function SettersForm() {
   const [mensajes, setMensajes] = useState<string[]>(() => Array(MENSAJES).fill(''));
   const [lineas, setLineas] = useState<string[]>(() => Array(LINEAS).fill(''));
   const [contactados, setContactados] = useState('');
+  const [accessCode, setAccessCode] = useState('');
   const [submitting, setSubmitting] = useState(false);
   const [feedback, setFeedback] = useState<{ kind: 'ok' | 'error'; message: string } | null>(null);
+
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    const code = new URLSearchParams(window.location.search).get('c') ?? '';
+    setAccessCode(code);
+  }, []);
 
   const filasContactados = useMemo(() => {
     const lines = contactados.split('\n').map((line) => line.trim()).filter(Boolean);
@@ -44,7 +51,7 @@ export function SettersForm() {
       const res = await fetch('/api/setters/submit', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ setter, mensajes, lineas, contactados }),
+        body: JSON.stringify({ setter, mensajes, lineas, contactados, accessCode }),
       });
       const data = (await res.json()) as { ok?: boolean; error?: string };
       if (!res.ok || !data.ok) {
