@@ -1,13 +1,24 @@
-export function LoginCard() {
+export function LoginCard({
+  eyebrow = 'Difusión',
+  title = 'Ingresar al panel',
+  description = 'Este panel centraliza campañas, respuestas entrantes e historial de WhatsApp en una sola vista.',
+  redirectTo = '/difusion',
+}: {
+  eyebrow?: string;
+  title?: string;
+  description?: string;
+  redirectTo?: string;
+}) {
   return (
     <div className="mx-auto max-w-md rounded-[2rem] border border-[rgba(212,175,55,0.18)] bg-white/5 p-8 shadow-[0_24px_80px_rgba(0,0,0,0.35)] backdrop-blur">
-      <p className="text-xs uppercase tracking-[0.28em] text-brand-gold">Difusión</p>
-      <h1 className="mt-3 text-3xl font-semibold text-brand-text">Ingresar al panel</h1>
+      <p className="text-xs uppercase tracking-[0.28em] text-brand-gold">{eyebrow}</p>
+      <h1 className="mt-3 text-3xl font-semibold text-brand-text">{title}</h1>
       <p className="mt-3 text-sm leading-relaxed text-brand-muted">
-        Este panel centraliza campañas, respuestas entrantes e historial de WhatsApp en una sola vista.
+        {description}
       </p>
 
       <form action="/api/admin/login" method="post" className="mt-8 grid gap-4">
+        <input type="hidden" name="next" value={redirectTo} />
         <label className="grid gap-1.5 text-left">
           <span className="text-xs font-medium uppercase tracking-[0.2em] text-brand-muted">
             Clave de acceso
