@@ -424,6 +424,28 @@ function formatReclutamientoRow(sheet, rowIndex) {
 
 /* ============ Helpers ============ */
 
+/**
+ * Función para autorizar permisos de Drive y Sheets.
+ *
+ * EJECUTAR UNA VEZ desde el editor de Apps Script:
+ *   1) Abrí el editor (Extensiones > Apps Script).
+ *   2) En el selector de funciones (arriba) elegí: autorizar
+ *   3) Click en "Ejecutar".
+ *   4) Va a aparecer un popup pidiendo permisos. Click "Revisar permisos",
+ *      elegí tu cuenta, click "Avanzado" > "Ir a (no seguro)" > "Permitir".
+ *   5) Listo. Ya no hace falta volver a hacerlo.
+ *
+ * Después de esto las fotos se guardan en Drive sin error.
+ */
+function autorizar() {
+  // Toca Drive para gatillar el consent screen
+  const folder = getFotosFolder();
+  // Toca Sheets también
+  const ss = SpreadsheetApp.openById(SHEET_ID);
+  Logger.log('Autorizado OK. Carpeta de fotos: ' + folder.getName() + ' | Sheet: ' + ss.getName());
+  return 'OK — permisos concedidos. Carpeta: ' + folder.getName();
+}
+
 function sanitizeSheetName(name) {
   // Google Sheets no permite: \ / ? * [ ] : y máximo 100 chars
   let clean = String(name).replace(/[\\\/\?\*\[\]:]/g, ' ').trim();

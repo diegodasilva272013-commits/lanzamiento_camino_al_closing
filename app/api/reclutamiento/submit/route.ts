@@ -73,7 +73,7 @@ export async function POST(req: Request) {
   // URL del Apps Script con la nueva versión (con appendReclutamiento + foto a Drive).
   // Hardcodeada acá porque el env var en Vercel apuntaba a una versión vieja.
   const url =
-    'https://script.google.com/macros/s/AKfycbxqOZmR4kJi1SuoC4yXLwOPp7XhN4ULbM3NN05uYVLl7KrQ162Hb4DjgDJgD8hvShkY/exec';
+    'https://script.google.com/macros/s/AKfycbzb6cRGhORGucp9Ww4WTXpGHNs3m1KEZG-AEl1o4Rz8bcxK5nF-H-UQ92c1N4_zUhR1/exec';
 
   const sheetsBody = {
     kind: 'reclutamiento',
