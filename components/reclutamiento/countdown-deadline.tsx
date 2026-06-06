@@ -2,10 +2,10 @@
 
 import { useEffect, useState } from 'react';
 
-// Domingo 16:00 hs Argentina (UTC-3) -> 19:00 UTC.
+// Domingo 17:00 hs Argentina (UTC-3) -> 20:00 UTC.
 // Este timestamp se calcula en tiempo de build/runtime; el countdown
 // se actualiza cada segundo en el cliente.
-const DEADLINE_ISO = '2026-06-07T16:00:00-03:00';
+const DEADLINE_ISO = '2026-06-07T17:00:00-03:00';
 
 type Parts = {
   days: number;

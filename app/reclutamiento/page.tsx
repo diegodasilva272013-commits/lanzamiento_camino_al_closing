@@ -391,7 +391,7 @@ export default function ReclutamientoPage() {
               </div>
               <h3 className="mt-5 font-serif text-3xl font-medium leading-[1.1] tracking-tight sm:text-4xl lg:text-[2.6rem]">
                 Tenés tiempo hasta el{' '}
-                <em className="gold-text font-bold not-italic">domingo a las 16:00</em>.
+                <em className="gold-text font-bold not-italic">domingo a las 17:00</em>.
               </h3>
               <p className="mt-5 max-w-md font-serif text-base leading-relaxed text-brand-text/85 sm:text-lg">
                 La reunión con todo el equipo de setters es el{' '}
