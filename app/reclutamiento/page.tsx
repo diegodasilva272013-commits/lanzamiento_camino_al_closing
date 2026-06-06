@@ -20,7 +20,7 @@ import { RecruitmentForm } from '@/components/reclutamiento/recruitment-form';
 export const metadata: Metadata = {
   title: 'Sumate al equipo de Setters · Camino al Closing',
   description:
-    'Buscamos setters comprometidos para nuestro equipo interno. Modalidad remota, comisiones por resultados y acompañamiento con sistema y estructura.',
+    'Buscamos setters comprometidos para nuestro equipo interno. Modalidad remota, comisiones por resultados (10%), tickets de USD 500 y USD 1.000.',
   robots: {
     index: false,
     follow: false,
@@ -30,6 +30,20 @@ export const metadata: Metadata = {
       follow: false,
       noimageindex: true,
     },
+  },
+  openGraph: {
+    type: 'website',
+    title: 'Sumate al equipo de Setters · Camino al Closing',
+    description:
+      'Buscamos setters para nuestro equipo interno. Modalidad remota, comisión 10%, tickets de USD 500 y USD 1.000.',
+    siteName: 'Camino al Closing',
+    locale: 'es_AR',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Sumate al equipo de Setters · Camino al Closing',
+    description:
+      'Buscamos setters para nuestro equipo interno. Modalidad remota, comisión 10%, tickets de USD 500 y USD 1.000.',
   },
 };
 
