@@ -18,6 +18,16 @@ export const metadata: Metadata = {
   title: 'Sumate al equipo de Setters · Camino al Closing',
   description:
     'Buscamos setters comprometidos para nuestro equipo interno. Modalidad remota, comisiones por resultados y acompañamiento con sistema y estructura.',
+  robots: {
+    index: false,
+    follow: false,
+    nocache: true,
+    googleBot: {
+      index: false,
+      follow: false,
+      noimageindex: true,
+    },
+  },
 };
 
 const stats = [

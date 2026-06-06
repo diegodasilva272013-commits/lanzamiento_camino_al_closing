@@ -6,7 +6,15 @@ export default function robots(): MetadataRoute.Robots {
       {
         userAgent: '*',
         allow: '/',
-        disallow: ['/difusion', '/setters', '/api/admin', '/api/difusion', '/api/setters'],
+        disallow: [
+          '/difusion',
+          '/setters',
+          '/reclutamiento',
+          '/api/admin',
+          '/api/difusion',
+          '/api/setters',
+          '/api/reclutamiento',
+        ],
       },
     ],
     host: 'https://lanzamiento-camino-al-closing.vercel.app',
