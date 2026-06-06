@@ -70,14 +70,10 @@ export async function POST(req: Request) {
     );
   }
 
-  const url = process.env.GOOGLE_SHEETS_WEBHOOK_URL;
-  if (!url) {
-    console.error('[reclutamiento] GOOGLE_SHEETS_WEBHOOK_URL no configurado.');
-    return NextResponse.json(
-      { ok: false, error: 'Servidor sin configurar. Avisá a Diego.' },
-      { status: 500 },
-    );
-  }
+  // URL del Apps Script con la nueva versión (con appendReclutamiento + foto a Drive).
+  // Hardcodeada acá porque el env var en Vercel apuntaba a una versión vieja.
+  const url =
+    'https://script.google.com/macros/s/AKfycbxqOZmR4kJi1SuoC4yXLwOPp7XhN4ULbM3NN05uYVLl7KrQ162Hb4DjgDJgD8hvShkY/exec';
 
   const sheetsBody = {
     kind: 'reclutamiento',
