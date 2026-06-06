@@ -70,13 +70,23 @@ export async function POST(req: Request) {
     );
   }
 
+  const timestamp = new Date().toISOString();
+
+  // Compatibilidad con el Apps Script viejo (que solo lee nombre/apellido/
+  // telefono/email y escribe en "Hoja 1"). Mapeamos todo el reporte a esos
+  // campos para que se grabe SIEMPRE, esté actualizado o no el Apps Script.
   const sheetsBody = {
     kind: 'setters',
-    timestamp: new Date().toISOString(),
+    timestamp,
     setter,
     mensajes,
     lineas,
     contactados,
+    // --- campos legacy ---
+    nombre: setter,
+    apellido: `Mensajes: ${mensajes.filter(Boolean).join('  |  ')}`,
+    telefono: `Líneas: ${lineas.filter(Boolean).join(', ')}`,
+    email: `Contactados:\n${contactados}`,
     secret: process.env.GOOGLE_SHEETS_SECRET ?? '',
   };
 
