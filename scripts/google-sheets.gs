@@ -21,6 +21,8 @@ const SECRET = ''; // opcional
 const TIMEZONE = 'America/Argentina/Buenos_Aires';
 
 const REGISTROS_SHEET_NAME = 'Registros';
+const RECLUTAMIENTO_SHEET_NAME = 'Postulaciones Setters';
+const FOTOS_FOLDER_NAME = 'Postulaciones Setters - Fotos';
 
 // Paleta de marca
 const COLOR_GOLD = '#d4af37';
@@ -41,6 +43,21 @@ const SETTER_HEADERS = [
   'Línea 3',
   'Total contactados',
   'Contactados (detalle)',
+];
+
+const RECLUTAMIENTO_HEADERS = [
+  'Fecha',
+  'Nombre',
+  'Apellido',
+  'Edad',
+  'WhatsApp',
+  'Email',
+  'Foto',
+  '¿Por qué setter?',
+  '¿Por qué el equipo?',
+  'Objetivos',
+  'Experiencia',
+  'Algo más',
 ];
 
 function doGet() {
@@ -65,6 +82,10 @@ function doPost(e) {
 
     if (data.kind === 'setters') {
       return appendSetters(data);
+    }
+
+    if (data.kind === 'reclutamiento') {
+      return appendReclutamiento(data);
     }
 
     return appendRegistro(data);
@@ -152,10 +173,17 @@ function appendSetters(data) {
     contactadosLineas.join('\n'),
   ];
 
-  sheet.appendRow(row);
+  const targetRow = sheet.getLastRow() + 1;
+
+  // Forzar TEXTO PLANO antes de escribir, así el "+" de los teléfonos y del
+  // detalle no se interpreta como fórmula (#ERROR!) ni se convierte en número.
+  sheet.getRange(targetRow, 3, 1, 8).setNumberFormat('@'); // Mensajes + Líneas (cols 3-10)
+  sheet.getRange(targetRow, 12).setNumberFormat('@');      // Contactados (detalle)
+
+  sheet.getRange(targetRow, 1, 1, SETTER_HEADERS.length).setValues([row]);
 
   // Formato de la fila recién agregada
-  const lastRow = sheet.getLastRow();
+  const lastRow = targetRow;
   formatDataRow(sheet, lastRow);
 
   return jsonResponse({
@@ -229,6 +257,169 @@ function formatDataRow(sheet, rowIndex) {
   // Fecha/Hora centrados, Total en negrita
   sheet.getRange(rowIndex, 1, 1, 2).setHorizontalAlignment('center');
   sheet.getRange(rowIndex, 11).setHorizontalAlignment('center').setFontWeight('bold');
+}
+
+/* ============ POSTULACIONES DE SETTERS (reclutamiento) ============ */
+
+function appendReclutamiento(data) {
+  const ss = SpreadsheetApp.openById(SHEET_ID);
+
+  let sheet = ss.getSheetByName(RECLUTAMIENTO_SHEET_NAME);
+  if (!sheet) {
+    sheet = ss.insertSheet(RECLUTAMIENTO_SHEET_NAME);
+    setupReclutamientoSheet(sheet);
+  }
+
+  const now = data.timestamp ? new Date(data.timestamp) : new Date();
+  const fecha = Utilities.formatDate(now, TIMEZONE, 'dd/MM/yyyy HH:mm');
+
+  // Subir foto a Drive (si vino) y armar fórmula de imagen
+  let fotoCell = '';
+  try {
+    const fotoUrl = saveReclutamientoFoto(data);
+    if (fotoUrl) {
+      fotoCell = '=IMAGE("' + fotoUrl + '", 4, 130, 100)';
+    }
+  } catch (errFoto) {
+    fotoCell = 'Error foto: ' + String(errFoto);
+  }
+
+  const row = [
+    fecha,
+    String(data.nombre || ''),
+    String(data.apellido || ''),
+    String(data.edad || ''),
+    String(data.whatsapp || ''),
+    String(data.email || ''),
+    '', // foto: se setea aparte
+    String(data.porQueSetter || ''),
+    String(data.porQueEquipo || ''),
+    String(data.objetivos || ''),
+    String(data.experiencia || ''),
+    String(data.algoMas || ''),
+  ];
+
+  const targetRow = sheet.getLastRow() + 1;
+
+  // Texto plano en WhatsApp/Email/datos para que el "+" no se rompa
+  sheet.getRange(targetRow, 2, 1, 5).setNumberFormat('@'); // Nombre..Email
+  sheet.getRange(targetRow, 8, 1, 5).setNumberFormat('@'); // Respuestas
+
+  sheet.getRange(targetRow, 1, 1, RECLUTAMIENTO_HEADERS.length).setValues([row]);
+
+  // Foto como fórmula IMAGE (columna 7)
+  if (fotoCell) {
+    if (fotoCell.indexOf('=IMAGE') === 0) {
+      sheet.getRange(targetRow, 7).setFormula(fotoCell);
+    } else {
+      sheet.getRange(targetRow, 7).setValue(fotoCell);
+    }
+  }
+
+  formatReclutamientoRow(sheet, targetRow);
+  sheet.setRowHeight(targetRow, 110);
+
+  return jsonResponse({
+    ok: true,
+    writtenTo: sheet.getName(),
+    totalRows: targetRow,
+    foto: fotoCell ? 'sí' : 'no',
+  });
+}
+
+function saveReclutamientoFoto(data) {
+  const foto = String(data.foto || '');
+  if (!foto || foto.indexOf('data:') !== 0) return '';
+
+  const match = foto.match(/^data:([^;]+);base64,(.*)$/);
+  if (!match) return '';
+
+  const mime = match[1];
+  const base64 = match[2];
+  const bytes = Utilities.base64Decode(base64);
+
+  const ext = mime.indexOf('png') >= 0 ? 'png' : 'jpg';
+  const nombre =
+    sanitizeSheetName(String(data.nombre || '') + ' ' + String(data.apellido || '')).trim() ||
+    'postulante';
+  const fileName =
+    nombre + ' - ' + Utilities.formatDate(new Date(), TIMEZONE, 'yyyyMMdd-HHmmss') + '.' + ext;
+
+  const blob = Utilities.newBlob(bytes, mime, fileName);
+  const folder = getFotosFolder();
+  const file = folder.createFile(blob);
+  file.setSharing(DriveApp.Access.ANYONE_WITH_LINK, DriveApp.Permission.VIEW);
+
+  return 'https://drive.google.com/uc?export=view&id=' + file.getId();
+}
+
+function getFotosFolder() {
+  const folders = DriveApp.getFoldersByName(FOTOS_FOLDER_NAME);
+  if (folders.hasNext()) return folders.next();
+  return DriveApp.createFolder(FOTOS_FOLDER_NAME);
+}
+
+function setupReclutamientoSheet(sheet) {
+  const cols = RECLUTAMIENTO_HEADERS.length;
+
+  // Fila 1: título de marca
+  sheet.getRange(1, 1, 1, cols).merge();
+  sheet.getRange(1, 1)
+    .setValue('Postulaciones · Setters — Camino al Closing')
+    .setBackground(COLOR_GOLD)
+    .setFontColor(COLOR_BLACK)
+    .setFontSize(13)
+    .setFontWeight('bold')
+    .setHorizontalAlignment('center')
+    .setVerticalAlignment('middle');
+  sheet.setRowHeight(1, 34);
+
+  // Fila 2: encabezados
+  sheet.getRange(2, 1, 1, cols)
+    .setValues([RECLUTAMIENTO_HEADERS])
+    .setBackground(COLOR_HEADER_BG)
+    .setFontColor(COLOR_GOLD)
+    .setFontWeight('bold')
+    .setHorizontalAlignment('center')
+    .setVerticalAlignment('middle');
+  sheet.setRowHeight(2, 26);
+
+  sheet.setFrozenRows(2);
+
+  // Anchos de columna
+  sheet.setColumnWidth(1, 130);  // Fecha
+  sheet.setColumnWidth(2, 120);  // Nombre
+  sheet.setColumnWidth(3, 120);  // Apellido
+  sheet.setColumnWidth(4, 60);   // Edad
+  sheet.setColumnWidth(5, 130);  // WhatsApp
+  sheet.setColumnWidth(6, 200);  // Email
+  sheet.setColumnWidth(7, 130);  // Foto
+  for (let c = 8; c <= 12; c++) sheet.setColumnWidth(c, 260); // Respuestas
+
+  const maxCols = sheet.getMaxColumns();
+  if (maxCols > cols) {
+    sheet.deleteColumns(cols + 1, maxCols - cols);
+  }
+}
+
+function formatReclutamientoRow(sheet, rowIndex) {
+  const cols = RECLUTAMIENTO_HEADERS.length;
+  const range = sheet.getRange(rowIndex, 1, 1, cols);
+
+  range
+    .setVerticalAlignment('top')
+    .setWrap(true)
+    .setBorder(true, true, true, true, true, true, '#e0d6bd', SpreadsheetApp.BorderStyle.SOLID);
+
+  if ((rowIndex - 3) % 2 === 1) {
+    range.setBackground(COLOR_ROW_ALT);
+  } else {
+    range.setBackground('#ffffff');
+  }
+
+  sheet.getRange(rowIndex, 1).setHorizontalAlignment('center');
+  sheet.getRange(rowIndex, 4).setHorizontalAlignment('center');
+  sheet.getRange(rowIndex, 7).setHorizontalAlignment('center').setVerticalAlignment('middle');
 }
 
 /* ============ Helpers ============ */
