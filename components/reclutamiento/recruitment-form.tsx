@@ -149,8 +149,10 @@ export function RecruitmentForm() {
     return (
       <div className="rounded-2xl border border-[rgba(212,175,55,0.35)] bg-black/40 p-8 text-center">
         <CheckCircle2 className="mx-auto h-12 w-12 text-brand-gold" />
-        <h4 className="mt-4 text-xl font-semibold text-brand-text">¡Postulación enviada!</h4>
-        <p className="mt-2 text-sm leading-relaxed text-brand-muted">{message}</p>
+        <h4 className="mt-4 font-display text-3xl uppercase tracking-[0.02em] text-brand-text">
+          ¡Postulación enviada!
+        </h4>
+        <p className="mt-3 font-sans text-sm leading-relaxed text-brand-muted">{message}</p>
       </div>
     );
   }
@@ -218,7 +220,7 @@ export function RecruitmentForm() {
       <button
         type="submit"
         disabled={status === 'loading'}
-        className="mt-1 inline-flex items-center justify-center gap-2 rounded-full bg-brand-gold px-6 py-3.5 text-sm font-semibold text-black transition hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-60"
+        className="mt-1 inline-flex items-center justify-center gap-2 rounded-full bg-brand-gold px-6 py-4 font-display text-base uppercase tracking-[0.18em] text-black shadow-[0_15px_40px_-10px_rgba(212,175,55,0.7)] transition hover:scale-[1.01] disabled:cursor-not-allowed disabled:opacity-60 sm:text-lg"
       >
         {status === 'loading' ? (
           <>

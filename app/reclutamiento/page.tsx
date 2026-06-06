@@ -116,7 +116,7 @@ export default function ReclutamientoPage() {
           <div className="flex min-w-0 items-center gap-3">
             <BrandLogo size="sm" priority />
             <div className="min-w-0 leading-tight">
-              <p className="truncate font-serif text-base font-semibold tracking-tight sm:text-lg">
+              <p className="truncate font-display text-xl uppercase tracking-[0.06em] sm:text-2xl">
                 {brand.name}
               </p>
               <p className="truncate text-[10px] uppercase tracking-[0.32em] text-brand-gold sm:text-[11px]">
@@ -153,14 +153,11 @@ export default function ReclutamientoPage() {
               </span>
             </div>
 
-            <h1 className="leading-[0.92] tracking-tight">
-              <span className="block font-serif text-5xl font-medium italic text-brand-text sm:text-6xl lg:text-7xl">
-                Estamos
+            <h1 className="leading-[0.88] tracking-[0.01em]">
+              <span className="block font-display text-5xl uppercase text-brand-text/95 sm:text-6xl lg:text-7xl">
+                Estamos buscando
               </span>
-              <span className="mt-1 block font-serif text-5xl font-medium italic text-brand-text sm:text-6xl lg:text-7xl">
-                buscando
-              </span>
-              <span className="gold-text mt-3 block font-display text-[5.5rem] font-normal leading-[0.85] tracking-[0.01em] sm:text-[7.5rem] lg:text-[10rem]">
+              <span className="gold-text mt-2 block font-display text-[5.5rem] leading-[0.85] sm:text-[7.5rem] lg:text-[10rem]">
                 SETTERS
               </span>
             </h1>
@@ -172,8 +169,8 @@ export default function ReclutamientoPage() {
               </p>
             </div>
 
-            <p className="mt-8 max-w-xl font-serif text-lg leading-relaxed text-brand-text/85 sm:text-xl">
-              Buscamos personas <em className="text-brand-gold not-italic font-semibold">comprometidas</em>,
+            <p className="mt-8 max-w-xl font-sans text-lg leading-relaxed text-brand-text/85 sm:text-xl">
+              Buscamos personas <span className="text-brand-gold font-semibold">comprometidas</span>,
               que quieran tomarse esto en serio, prospectar con constancia y crecer con nosotros.
             </p>
 
@@ -181,14 +178,14 @@ export default function ReclutamientoPage() {
             <div className="mt-10 overflow-hidden rounded-2xl border border-[rgba(212,175,55,0.45)] bg-[linear-gradient(135deg,rgba(212,175,55,0.22),rgba(212,175,55,0.04)_60%,rgba(255,255,255,0.02))] p-[1px] gold-border-glow">
               <div className="flex items-center gap-5 rounded-[15px] bg-black/65 p-5 backdrop-blur sm:p-6">
                 <div className="relative flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-brand-gold text-black sm:h-16 sm:w-16">
-                  <span className="font-serif text-3xl font-bold sm:text-4xl">$</span>
+                  <span className="font-display text-4xl sm:text-5xl">$</span>
                   <span className="absolute -inset-1 rounded-2xl bg-brand-gold/40 blur-md" />
                 </div>
                 <div>
                   <p className="text-[10px] uppercase tracking-[0.36em] text-brand-muted">
                     Tickets que vendemos
                   </p>
-                  <p className="gold-text mt-0.5 font-serif text-2xl font-bold sm:text-3xl">
+                  <p className="gold-text mt-1 font-display text-3xl uppercase tracking-[0.04em] sm:text-4xl">
                     USD 500 · USD 1.000
                   </p>
                 </div>
@@ -232,7 +229,7 @@ export default function ReclutamientoPage() {
                     En vivo
                   </p>
                 </div>
-                <p className="mt-1 font-serif text-base font-semibold italic text-brand-text">
+                <p className="mt-1 font-display text-xl uppercase tracking-[0.04em] text-brand-text">
                   Sumate al equipo
                 </p>
                 <p className="text-xs text-brand-muted">Setters · Modalidad remota</p>
@@ -256,10 +253,10 @@ export default function ReclutamientoPage() {
               </p>
               <span className="h-px w-10 bg-brand-gold/50" />
             </div>
-            <h2 className="mt-5 font-serif text-4xl font-medium tracking-tight text-brand-text sm:text-5xl">
-              Reglas del juego <em className="gold-text font-bold not-italic">claras</em>.
+            <h2 className="mt-5 font-display text-5xl uppercase leading-[0.95] tracking-[0.01em] text-brand-text sm:text-6xl">
+              Reglas del juego <span className="gold-text">claras</span>.
             </h2>
-            <p className="mt-4 text-base text-brand-muted">
+            <p className="mt-5 font-sans text-base text-brand-muted">
               Sin promesas vacías. Esto es lo que esperamos y lo que ofrecemos.
             </p>
           </div>
@@ -298,10 +295,10 @@ export default function ReclutamientoPage() {
       <section className="relative z-10 mx-auto max-w-4xl px-4 pt-24 sm:px-6">
         <div className="relative text-center">
           <Quote className="mx-auto h-12 w-12 text-brand-gold/50" />
-          <p className="mt-7 font-serif text-3xl font-medium italic leading-[1.2] text-brand-text sm:text-4xl lg:text-5xl">
-            “Más que experiencia,
+          <p className="mt-7 font-display text-4xl uppercase leading-[0.95] tracking-[0.02em] text-brand-text sm:text-5xl lg:text-6xl">
+            Más que experiencia,
             <br className="hidden sm:block" />{' '}
-            <span className="gold-text font-bold not-italic">buscamos compromiso</span>.”
+            <span className="gold-text">buscamos compromiso</span>.
           </p>
           <p className="mt-6 text-sm uppercase tracking-[0.32em] text-brand-muted">
             — Camino al Closing
@@ -327,8 +324,8 @@ export default function ReclutamientoPage() {
                   Lo que buscamos
                 </p>
               </div>
-              <h3 className="mt-5 font-serif text-4xl font-medium tracking-tight sm:text-[2.6rem]">
-                El perfil que <em className="gold-text font-bold not-italic">encaja</em>.
+              <h3 className="mt-5 font-display text-5xl uppercase leading-[0.95] tracking-[0.01em] sm:text-6xl">
+                El perfil que <span className="gold-text">encaja</span>.
               </h3>
               <ul className="mt-9 space-y-4">
                 {buscamos.map((item, i) => (
@@ -340,8 +337,8 @@ export default function ReclutamientoPage() {
                       {String(i + 1).padStart(2, '0')}
                     </span>
                     <div className="flex-1">
-                      <p className="font-serif text-xl font-semibold text-brand-text">{item.t}</p>
-                      <p className="mt-1 text-sm leading-relaxed text-brand-muted">{item.s}</p>
+                      <p className="font-display text-2xl uppercase tracking-[0.02em] text-brand-text">{item.t}</p>
+                      <p className="mt-1 font-sans text-sm leading-relaxed text-brand-muted">{item.s}</p>
                     </div>
                     <CheckCircle2 className="mt-1 h-5 w-5 shrink-0 text-brand-gold/80" />
                   </li>
@@ -364,8 +361,8 @@ export default function ReclutamientoPage() {
                   No es para vos si…
                 </p>
               </div>
-              <h3 className="mt-5 font-serif text-4xl font-medium tracking-tight text-brand-text/85 sm:text-[2.6rem]">
-                Mejor <em className="font-bold not-italic">no apliques</em> si:
+              <h3 className="mt-5 font-display text-5xl uppercase leading-[0.95] tracking-[0.01em] text-brand-text/85 sm:text-6xl">
+                Mejor <span className="text-white">no apliques</span> si:
               </h3>
               <ul className="mt-9 space-y-5">
                 {noEsParaVos.map((item) => (
@@ -373,12 +370,12 @@ export default function ReclutamientoPage() {
                     <span className="mt-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-red-500/10 ring-1 ring-red-400/30">
                       <XCircle className="h-4 w-4 text-red-400/90" />
                     </span>
-                    <p className="font-serif text-lg leading-snug text-brand-muted/90">{item}</p>
+                    <p className="font-sans text-base leading-snug text-brand-muted/90">{item}</p>
                   </li>
                 ))}
               </ul>
-              <p className="mt-10 border-t border-white/10 pt-5 font-serif text-base italic leading-relaxed text-brand-muted">
-                Preferimos un “no” a tiempo que perder semanas con alguien que no se lo va a tomar
+              <p className="mt-10 border-t border-white/10 pt-5 font-sans text-sm leading-relaxed text-brand-muted">
+                Preferimos un &ldquo;no&rdquo; a tiempo que perder semanas con alguien que no se lo va a tomar
                 en serio.
               </p>
             </div>
@@ -403,11 +400,11 @@ export default function ReclutamientoPage() {
                   Cierre de postulación
                 </p>
               </div>
-              <h3 className="mt-5 font-serif text-3xl font-medium leading-[1.1] tracking-tight sm:text-4xl lg:text-[2.6rem]">
+              <h3 className="mt-5 font-display text-4xl uppercase leading-[0.95] tracking-[0.01em] sm:text-5xl lg:text-[3.5rem]">
                 Tenés tiempo hasta el{' '}
-                <em className="gold-text font-bold not-italic">domingo a las 17:00</em>.
+                <span className="gold-text">domingo a las 17:00</span>.
               </h3>
-              <p className="mt-5 max-w-md font-serif text-base leading-relaxed text-brand-text/85 sm:text-lg">
+              <p className="mt-5 max-w-md font-sans text-base leading-relaxed text-brand-text/85 sm:text-lg">
                 La reunión con todo el equipo de setters es el{' '}
                 <span className="font-semibold text-brand-gold">domingo a las 19:00 hs</span>{' '}
                 (Argentina). Si querés estar, postulate antes del cierre.
@@ -459,19 +456,19 @@ export default function ReclutamientoPage() {
               <div className="flex items-center gap-4">
                 <BrandLogo size="md" />
                 <div className="leading-tight">
-                  <p className="font-serif text-lg font-semibold tracking-tight">{brand.name}</p>
+                  <p className="font-display text-2xl uppercase tracking-[0.04em]">{brand.name}</p>
                   <p className="text-[11px] uppercase tracking-[0.32em] text-brand-gold">
                     Equipo interno
                   </p>
                 </div>
               </div>
 
-              <h3 className="mt-8 font-serif text-4xl font-medium leading-[1.05] tracking-tight sm:text-5xl lg:text-[3.2rem]">
+              <h3 className="mt-8 font-display text-5xl uppercase leading-[0.92] tracking-[0.01em] sm:text-6xl lg:text-[5rem]">
                 Contanos por qué{' '}
-                <em className="gold-text font-bold not-italic">querés formar parte</em>.
+                <span className="gold-text">querés formar parte</span>.
               </h3>
 
-              <p className="mt-6 max-w-xl font-serif text-lg leading-relaxed text-brand-text/85">
+              <p className="mt-6 max-w-xl font-sans text-lg leading-relaxed text-brand-text/85">
                 Completá el formulario con tus datos y motivaciones. Si encajás con el perfil, nos
                 ponemos en contacto con vos.
               </p>
@@ -495,7 +492,7 @@ export default function ReclutamientoPage() {
 
               <div className="mt-10 hidden rounded-2xl border border-[rgba(212,175,55,0.22)] bg-black/45 p-6 lg:block">
                 <Quote className="h-5 w-5 text-brand-gold/70" />
-                <p className="mt-3 font-serif text-base italic leading-relaxed text-brand-text/90">
+                <p className="mt-3 font-sans text-base leading-relaxed text-brand-text/90">
                   Si vas a tomártelo en serio, este puede ser el lugar donde tu trabajo se
                   multiplique.
                 </p>
@@ -517,7 +514,7 @@ export default function ReclutamientoPage() {
         <div className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-3 px-4 py-7 text-xs text-brand-muted sm:flex-row sm:px-6">
           <div className="flex items-center gap-3">
             <BrandLogo size="sm" />
-            <span className="font-serif italic">
+            <span className="font-display text-base uppercase tracking-[0.06em]">
               {brand.name} · {brand.tagline}
             </span>
           </div>
