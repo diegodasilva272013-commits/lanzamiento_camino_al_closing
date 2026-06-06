@@ -33,17 +33,29 @@ export const metadata: Metadata = {
   },
   openGraph: {
     type: 'website',
+    url: 'https://lanzamiento-camino-al-closing.vercel.app/reclutamiento',
     title: 'Sumate al equipo de Setters · Camino al Closing',
     description:
       'Buscamos setters para nuestro equipo interno. Modalidad remota, comisión 10%, tickets de USD 500 y USD 1.000.',
     siteName: 'Camino al Closing',
     locale: 'es_AR',
+    images: [
+      {
+        url: 'https://lanzamiento-camino-al-closing.vercel.app/reclutamiento-og.jpg',
+        secureUrl: 'https://lanzamiento-camino-al-closing.vercel.app/reclutamiento-og.jpg',
+        width: 1200,
+        height: 630,
+        alt: 'Sumate al equipo de Setters · Camino al Closing',
+        type: 'image/jpeg',
+      },
+    ],
   },
   twitter: {
     card: 'summary_large_image',
     title: 'Sumate al equipo de Setters · Camino al Closing',
     description:
       'Buscamos setters para nuestro equipo interno. Modalidad remota, comisión 10%, tickets de USD 500 y USD 1.000.',
+    images: ['https://lanzamiento-camino-al-closing.vercel.app/reclutamiento-og.jpg'],
   },
 };
 
