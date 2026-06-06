@@ -110,6 +110,14 @@ export function RecruitmentForm() {
 
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
+
+    if (!foto) {
+      setStatus('error');
+      setMessage('Subí una foto para completar tu postulación.');
+      setFotoError('La foto es obligatoria.');
+      return;
+    }
+
     setStatus('loading');
     setMessage('');
 
@@ -162,7 +170,7 @@ export function RecruitmentForm() {
       {/* Foto */}
       <div className="grid gap-2">
         <span className="text-xs font-medium uppercase tracking-[0.2em] text-brand-muted">
-          Foto (opcional)
+          Foto
         </span>
         {foto ? (
           <div className="flex items-center gap-4 rounded-xl border border-[rgba(212,175,55,0.25)] bg-black/60 p-3">
@@ -205,7 +213,7 @@ export function RecruitmentForm() {
       <TextArea label="¿Por qué querés ser parte del equipo?" value={values.porQueEquipo} onChange={(v) => update('porQueEquipo', v)} />
       <TextArea label="¿Cuáles son tus objetivos?" value={values.objetivos} onChange={(v) => update('objetivos', v)} />
       <TextArea label="¿Tenés experiencia? Contanos" value={values.experiencia} onChange={(v) => update('experiencia', v)} />
-      <TextArea label="Contanos algo que quieras que sepamos (opcional)" value={values.algoMas} onChange={(v) => update('algoMas', v)} required={false} />
+      <TextArea label="Contanos algo que quieras que sepamos" value={values.algoMas} onChange={(v) => update('algoMas', v)} />
 
       <button
         type="submit"
@@ -264,15 +272,14 @@ type TextAreaProps = {
   label: string;
   value: string;
   onChange: (value: string) => void;
-  required?: boolean;
 };
 
-function TextArea({ label, value, onChange, required = true }: TextAreaProps) {
+function TextArea({ label, value, onChange }: TextAreaProps) {
   return (
     <label className="grid gap-1.5 text-left">
       <span className="text-xs font-medium uppercase tracking-[0.2em] text-brand-muted">{label}</span>
       <textarea
-        required={required}
+        required
         rows={3}
         value={value}
         onChange={(e) => onChange(e.target.value)}

@@ -51,9 +51,21 @@ export async function POST(req: Request) {
       { status: 400 },
     );
   }
-  if (!porQueSetter || !porQueEquipo || !objetivos || !experiencia) {
+  if (!porQueSetter || !porQueEquipo || !objetivos || !experiencia || !algoMas) {
     return NextResponse.json(
       { ok: false, error: 'Respondé todas las preguntas de la postulación.' },
+      { status: 400 },
+    );
+  }
+  if (!edad) {
+    return NextResponse.json(
+      { ok: false, error: 'Ingresá tu edad.' },
+      { status: 400 },
+    );
+  }
+  if (!foto) {
+    return NextResponse.json(
+      { ok: false, error: 'Subí una foto para completar la postulación.' },
       { status: 400 },
     );
   }
