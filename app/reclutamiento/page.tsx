@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import {
   ArrowRight,
   ArrowUpRight,
+  CalendarClock,
   CheckCircle2,
   Clock,
   Laptop,
@@ -13,6 +14,7 @@ import {
 import { brand } from '@/constants/branding';
 import { BrandLogo } from '@/components/brand/brand-logo';
 import { BrandVideo } from '@/components/brand/brand-video';
+import { CountdownDeadline } from '@/components/reclutamiento/countdown-deadline';
 import { RecruitmentForm } from '@/components/reclutamiento/recruitment-form';
 
 export const metadata: Metadata = {
@@ -367,6 +369,51 @@ export default function ReclutamientoPage() {
               </p>
             </div>
           </article>
+        </div>
+      </section>
+
+      {/* COUNTDOWN */}
+      <section className="relative z-10 mx-auto max-w-5xl px-4 pt-4 sm:px-6">
+        <div className="relative overflow-hidden rounded-[2rem] border border-[rgba(212,175,55,0.32)] bg-[linear-gradient(150deg,rgba(212,175,55,0.18),rgba(255,255,255,0.03)_55%,rgba(0,0,0,0.4))] p-7 sm:p-10 lg:p-12 gold-border-glow">
+          <div
+            aria-hidden
+            className="pointer-events-none absolute -right-24 -top-24 h-72 w-72 rounded-full bg-brand-gold/20 blur-3xl"
+          />
+          <div className="relative grid items-center gap-10 lg:grid-cols-[0.95fr_1.05fr]">
+            <div>
+              <div className="flex items-center gap-3">
+                <span className="flex h-9 w-9 items-center justify-center rounded-full bg-brand-gold/15 text-brand-gold ring-1 ring-brand-gold/40">
+                  <CalendarClock className="h-4 w-4" />
+                </span>
+                <p className="text-[10px] font-semibold uppercase tracking-[0.4em] text-brand-gold">
+                  Cierre de postulación
+                </p>
+              </div>
+              <h3 className="mt-5 font-serif text-3xl font-medium leading-[1.1] tracking-tight sm:text-4xl lg:text-[2.6rem]">
+                Tenés tiempo hasta el{' '}
+                <em className="gold-text font-bold not-italic">domingo a las 16:00</em>.
+              </h3>
+              <p className="mt-5 max-w-md font-serif text-base leading-relaxed text-brand-text/85 sm:text-lg">
+                La reunión con todo el equipo de setters es el{' '}
+                <span className="font-semibold text-brand-gold">domingo a las 19:00 hs</span>{' '}
+                (Argentina). Si querés estar, postulate antes del cierre.
+              </p>
+              <a
+                href="#postulate"
+                className="group mt-7 inline-flex items-center gap-2 rounded-full bg-brand-gold px-6 py-3 text-xs font-semibold uppercase tracking-[0.22em] text-black shadow-[0_15px_40px_-12px_rgba(212,175,55,0.7)] transition hover:scale-[1.02]"
+              >
+                Postularme ahora
+                <ArrowRight className="h-3.5 w-3.5 transition group-hover:translate-x-0.5" />
+              </a>
+            </div>
+
+            <div>
+              <CountdownDeadline />
+              <p className="mt-5 text-center text-[11px] uppercase tracking-[0.32em] text-brand-muted">
+                Faltan para el cierre · Hora Argentina
+              </p>
+            </div>
+          </div>
         </div>
       </section>
 
