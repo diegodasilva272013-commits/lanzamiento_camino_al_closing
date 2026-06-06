@@ -62,6 +62,7 @@ const RECLUTAMIENTO_HEADERS = [
 
 function doGet() {
   const ss = SpreadsheetApp.openById(SHEET_ID);
+  repairReclutamientoFotoFormulas(ss);
   const sheets = ss.getSheets().map(function (sheet) {
     return { name: sheet.getName(), rows: sheet.getLastRow() };
   });
@@ -270,15 +271,19 @@ function appendReclutamiento(data) {
     setupReclutamientoSheet(sheet);
   }
 
+  repairReclutamientoFotoFormulas(ss);
+
   const now = data.timestamp ? new Date(data.timestamp) : new Date();
   const fecha = Utilities.formatDate(now, TIMEZONE, 'dd/MM/yyyy HH:mm');
 
-  // Subir foto a Drive (si vino) y armar fórmula de imagen
+  // Subir foto a Drive y renderizarla inline en la celda con el endpoint compatible de Google.
   let fotoCell = '';
+  let fotoFormula = '';
   try {
-    const fotoUrl = saveReclutamientoFoto(data);
-    if (fotoUrl) {
-      fotoCell = '=IMAGE("' + fotoUrl + '", 4, 130, 100)';
+    const fotoFileId = saveReclutamientoFoto(data);
+    if (fotoFileId) {
+      fotoFormula = '=IMAGE("https://drive.google.com/thumbnail?id=' + fotoFileId + '&sz=w400",4,130,100)';
+      fotoCell = fotoFormula;
     }
   } catch (errFoto) {
     fotoCell = 'Error foto: ' + String(errFoto);
@@ -307,10 +312,10 @@ function appendReclutamiento(data) {
 
   sheet.getRange(targetRow, 1, 1, RECLUTAMIENTO_HEADERS.length).setValues([row]);
 
-  // Foto como fórmula IMAGE (columna 7)
+  // Foto: imagen inline en columna 7
   if (fotoCell) {
-    if (fotoCell.indexOf('=IMAGE') === 0) {
-      sheet.getRange(targetRow, 7).setFormula(fotoCell);
+    if (fotoFormula) {
+      sheet.getRange(targetRow, 7).setFormula(fotoFormula);
     } else {
       sheet.getRange(targetRow, 7).setValue(fotoCell);
     }
@@ -350,13 +355,33 @@ function saveReclutamientoFoto(data) {
   const file = folder.createFile(blob);
   file.setSharing(DriveApp.Access.ANYONE_WITH_LINK, DriveApp.Permission.VIEW);
 
-  return 'https://drive.google.com/uc?export=view&id=' + file.getId();
+  return file.getId();
 }
 
 function getFotosFolder() {
   const folders = DriveApp.getFoldersByName(FOTOS_FOLDER_NAME);
   if (folders.hasNext()) return folders.next();
   return DriveApp.createFolder(FOTOS_FOLDER_NAME);
+}
+
+function repairReclutamientoFotoFormulas(ss) {
+  const sheet = ss.getSheetByName(RECLUTAMIENTO_SHEET_NAME);
+  if (!sheet || sheet.getLastRow() < 3) return;
+
+  const range = sheet.getRange(3, 7, sheet.getLastRow() - 2, 1);
+  const formulas = range.getFormulas();
+  let changed = false;
+
+  for (let i = 0; i < formulas.length; i++) {
+    const formula = formulas[i][0];
+    const match = formula.match(/uc\?export=view&id=([^"&]+)/);
+    if (match) {
+      formulas[i][0] = '=IMAGE("https://drive.google.com/thumbnail?id=' + match[1] + '&sz=w400",4,130,100)';
+      changed = true;
+    }
+  }
+
+  if (changed) range.setFormulas(formulas);
 }
 
 function setupReclutamientoSheet(sheet) {
