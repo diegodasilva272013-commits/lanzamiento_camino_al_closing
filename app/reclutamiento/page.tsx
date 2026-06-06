@@ -373,7 +373,7 @@ export default function ReclutamientoPage() {
       </section>
 
       {/* COUNTDOWN */}
-      <section className="relative z-10 mx-auto max-w-5xl px-4 pt-4 sm:px-6">
+      <section className="relative z-10 mx-auto max-w-5xl px-4 pb-16 pt-4 sm:px-6 lg:pb-24">
         <div className="relative overflow-hidden rounded-[2rem] border border-[rgba(212,175,55,0.32)] bg-[linear-gradient(150deg,rgba(212,175,55,0.18),rgba(255,255,255,0.03)_55%,rgba(0,0,0,0.4))] p-7 sm:p-10 lg:p-12 gold-border-glow">
           <div
             aria-hidden
