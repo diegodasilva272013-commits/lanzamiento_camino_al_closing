@@ -5,7 +5,7 @@ import { BrandLogo } from '@/components/brand/brand-logo';
 import { RecruitmentGroupTaskForm } from '@/components/reclutamiento/recruitment-group-task-form';
 import { brand } from '@/constants/branding';
 
-const ogImage = 'https://lanzamiento-camino-al-closing.vercel.app/reclutamiento-og.jpg';
+const ogImage = 'https://lanzamiento-camino-al-closing.vercel.app/grupo-reclutamiento-og.png';
 
 export const metadata: Metadata = {
   title: 'Tarea grupo de reclutamiento · Camino al Closing',
@@ -22,10 +22,10 @@ export const metadata: Metadata = {
       {
         url: ogImage,
         secureUrl: ogImage,
-        width: 1200,
-        height: 630,
-        alt: 'Grupo de reclutamiento · Camino al Closing',
-        type: 'image/jpeg',
+        width: 1122,
+        height: 1402,
+        alt: 'Tarea y formulario · Camino al Closing',
+        type: 'image/png',
       },
     ],
   },
