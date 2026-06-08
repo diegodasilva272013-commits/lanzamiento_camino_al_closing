@@ -65,7 +65,7 @@ export async function POST(req: Request) {
   }
   if (!foto) {
     return NextResponse.json(
-      { ok: false, error: 'Subí una foto para completar la postulación.' },
+      { ok: false, error: 'Subí una foto para completar el ingreso a la lista de espera.' },
       { status: 400 },
     );
   }
@@ -105,7 +105,7 @@ export async function POST(req: Request) {
       const text = await res.text().catch(() => '');
       console.error('[reclutamiento] Sheets HTTP', res.status, text);
       return NextResponse.json(
-        { ok: false, error: 'No pudimos guardar tu postulación. Intentá de nuevo.' },
+        { ok: false, error: 'No pudimos guardar tus datos en lista de espera. Intentá de nuevo.' },
         { status: 502 },
       );
     }

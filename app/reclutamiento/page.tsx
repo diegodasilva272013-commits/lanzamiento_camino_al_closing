@@ -14,13 +14,12 @@ import {
 import { brand } from '@/constants/branding';
 import { BrandLogo } from '@/components/brand/brand-logo';
 import { BrandVideo } from '@/components/brand/brand-video';
-import { CountdownDeadline } from '@/components/reclutamiento/countdown-deadline';
 import { RecruitmentForm } from '@/components/reclutamiento/recruitment-form';
 
 export const metadata: Metadata = {
-  title: 'Sumate al equipo de Setters · Camino al Closing',
+  title: 'Lista de espera · Setters · Camino al Closing',
   description:
-    'Buscamos setters comprometidos para nuestro equipo interno. Modalidad remota, comisiones por resultados (10%), tickets de USD 500 y USD 1.000.',
+    'Las inscripciones al equipo de setters finalizaron. Dejá tus datos en lista de espera y te vamos a priorizar cuando necesitemos nuevo personal.',
   robots: {
     index: false,
     follow: false,
@@ -34,9 +33,9 @@ export const metadata: Metadata = {
   openGraph: {
     type: 'website',
     url: 'https://lanzamiento-camino-al-closing.vercel.app/reclutamiento',
-    title: 'Sumate al equipo de Setters · Camino al Closing',
+    title: 'Lista de espera · Setters · Camino al Closing',
     description:
-      'Buscamos setters para nuestro equipo interno. Modalidad remota, comisión 10%, tickets de USD 500 y USD 1.000.',
+      'Las inscripciones finalizaron. Dejá tus datos en lista de espera y te vamos a priorizar para próximas búsquedas.',
     siteName: 'Camino al Closing',
     locale: 'es_AR',
     images: [
@@ -45,16 +44,16 @@ export const metadata: Metadata = {
         secureUrl: 'https://lanzamiento-camino-al-closing.vercel.app/reclutamiento-og.jpg',
         width: 1200,
         height: 630,
-        alt: 'Sumate al equipo de Setters · Camino al Closing',
+        alt: 'Lista de espera · Setters · Camino al Closing',
         type: 'image/jpeg',
       },
     ],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Sumate al equipo de Setters · Camino al Closing',
+    title: 'Lista de espera · Setters · Camino al Closing',
     description:
-      'Buscamos setters para nuestro equipo interno. Modalidad remota, comisión 10%, tickets de USD 500 y USD 1.000.',
+      'Las inscripciones finalizaron. Dejá tus datos en lista de espera y te vamos a priorizar para próximas búsquedas.',
     images: ['https://lanzamiento-camino-al-closing.vercel.app/reclutamiento-og.jpg'],
   },
 };
@@ -140,7 +139,7 @@ export default function ReclutamientoPage() {
             href="#postulate"
             className="group relative inline-flex items-center gap-2 overflow-hidden rounded-full bg-brand-gold px-5 py-2.5 text-xs font-semibold uppercase tracking-[0.18em] text-black shadow-[0_8px_24px_-8px_rgba(212,175,55,0.6)] transition hover:scale-[1.02]"
           >
-            <span className="relative z-10">Postularme</span>
+            <span className="relative z-10">Lista de espera</span>
             <ArrowRight className="relative z-10 h-3.5 w-3.5 transition group-hover:translate-x-0.5" />
             <span className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/40 to-transparent transition-transform duration-700 group-hover:translate-x-full" />
           </a>
@@ -161,29 +160,29 @@ export default function ReclutamientoPage() {
               <span className="font-display text-3xl text-brand-gold/90 leading-none">N° 01</span>
               <span className="h-px flex-1 max-w-16 bg-brand-gold/40" />
               <span className="font-sans text-[10px] font-semibold uppercase tracking-[0.4em] text-brand-gold">
-                Búsqueda abierta
+                Inscripciones finalizadas
               </span>
             </div>
 
             <h1 className="leading-[0.88] tracking-[0.01em]">
               <span className="block font-display text-5xl uppercase text-brand-text/95 sm:text-6xl lg:text-7xl">
-                Estamos buscando
+                Sumate a la
               </span>
               <span className="gold-text mt-2 block font-display text-[5.5rem] leading-[0.85] sm:text-[7.5rem] lg:text-[10rem]">
-                SETTERS
+                ESPERA
               </span>
             </h1>
 
             <div className="mt-7 flex items-center gap-3">
               <span className="h-px w-10 bg-brand-gold/60" />
               <p className="text-[11px] font-medium uppercase tracking-[0.4em] text-brand-gold">
-                Para nuestro equipo interno
+                Para próximas búsquedas del equipo
               </p>
             </div>
 
             <p className="mt-8 max-w-xl font-sans text-lg leading-relaxed text-brand-text/85 sm:text-xl">
-              Buscamos personas <span className="text-brand-gold font-semibold">comprometidas</span>,
-              que quieran tomarse esto en serio, prospectar con constancia y crecer con nosotros.
+              La convocatoria principal ya cerró. Si querés que te tengamos en cuenta para futuras
+              incorporaciones, dejá tus datos en <span className="text-brand-gold font-semibold">lista de espera</span>.
             </p>
 
             {/* Tickets banner premium */}
@@ -198,7 +197,7 @@ export default function ReclutamientoPage() {
                     Tickets que vendemos
                   </p>
                   <p className="gold-text mt-1 font-display text-3xl uppercase tracking-[0.04em] sm:text-4xl">
-                    USD 500 · USD 1.000
+                    Lista prioritaria
                   </p>
                 </div>
               </div>
@@ -209,7 +208,7 @@ export default function ReclutamientoPage() {
                 href="#postulate"
                 className="group relative inline-flex items-center justify-center gap-2 overflow-hidden rounded-full bg-brand-gold px-8 py-4 text-xs font-semibold uppercase tracking-[0.22em] text-black shadow-[0_15px_40px_-10px_rgba(212,175,55,0.7)] transition hover:scale-[1.02]"
               >
-                <span className="relative z-10">Quiero postularme</span>
+                <span className="relative z-10">Anotarme en lista</span>
                 <ArrowRight className="relative z-10 h-3.5 w-3.5 transition group-hover:translate-x-0.5" />
                 <span className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/50 to-transparent transition-transform duration-700 group-hover:translate-x-full" />
               </a>
@@ -242,9 +241,9 @@ export default function ReclutamientoPage() {
                   </p>
                 </div>
                 <p className="mt-1 font-display text-xl uppercase tracking-[0.04em] text-brand-text">
-                  Sumate al equipo
+                  Lista de espera
                 </p>
-                <p className="text-xs text-brand-muted">Setters · Modalidad remota</p>
+                <p className="text-xs text-brand-muted">Setters · Próximas vacantes</p>
               </div>
             </div>
           </div>
@@ -395,7 +394,7 @@ export default function ReclutamientoPage() {
         </div>
       </section>
 
-      {/* COUNTDOWN */}
+      {/* WAITLIST */}
       <section className="relative z-10 mx-auto max-w-5xl px-4 pb-16 pt-4 sm:px-6 lg:pb-24">
         <div className="relative overflow-hidden rounded-[2rem] border border-[rgba(212,175,55,0.32)] bg-[linear-gradient(150deg,rgba(212,175,55,0.18),rgba(255,255,255,0.03)_55%,rgba(0,0,0,0.4))] p-7 sm:p-10 lg:p-12 gold-border-glow">
           <div
@@ -409,32 +408,39 @@ export default function ReclutamientoPage() {
                   <CalendarClock className="h-4 w-4" />
                 </span>
                 <p className="text-[10px] font-semibold uppercase tracking-[0.4em] text-brand-gold">
-                  Cierre de postulación
+                  Lista de espera activa
                 </p>
               </div>
               <h3 className="mt-5 font-display text-4xl uppercase leading-[0.95] tracking-[0.01em] sm:text-5xl lg:text-[3.5rem]">
-                Tenés tiempo hasta el{' '}
-                <span className="gold-text">domingo a las 17:00</span>.
+                Las inscripciones <span className="gold-text">ya finalizaron</span>.
               </h3>
               <p className="mt-5 max-w-md font-sans text-base leading-relaxed text-brand-text/85 sm:text-lg">
-                La reunión con todo el equipo de setters es el{' '}
-                <span className="font-semibold text-brand-gold">domingo a las 19:00 hs</span>{' '}
-                (Argentina). Si querés estar, postulate antes del cierre.
+                A partir de ahora vamos a guardar tus datos en lista de espera. Cuando necesitemos
+                nuevo personal, vamos a darle prioridad a las personas que ya hayan completado este formulario.
               </p>
               <a
                 href="#postulate"
                 className="group mt-7 inline-flex items-center gap-2 rounded-full bg-brand-gold px-6 py-3 text-xs font-semibold uppercase tracking-[0.22em] text-black shadow-[0_15px_40px_-12px_rgba(212,175,55,0.7)] transition hover:scale-[1.02]"
               >
-                Postularme ahora
+                Entrar en lista de espera
                 <ArrowRight className="h-3.5 w-3.5 transition group-hover:translate-x-0.5" />
               </a>
             </div>
 
-            <div>
-              <CountdownDeadline />
-              <p className="mt-5 text-center text-[11px] uppercase tracking-[0.32em] text-brand-muted">
-                Faltan para el cierre · Hora Argentina
-              </p>
+            <div className="grid gap-4">
+              {[
+                'Tus datos quedan guardados con prioridad para futuras búsquedas.',
+                'Usamos la misma información para evaluar tu perfil cuando se abra una vacante.',
+                'Si el perfil encaja con lo que necesitamos, te vamos a contactar directamente.',
+              ].map((item) => (
+                <div
+                  key={item}
+                  className="rounded-2xl border border-[rgba(212,175,55,0.26)] bg-black/45 px-5 py-4 text-sm leading-relaxed text-brand-text/85"
+                >
+                  <CheckCircle2 className="mr-3 inline h-4 w-4 text-brand-gold" />
+                  {item}
+                </div>
+              ))}
             </div>
           </div>
         </div>
@@ -461,7 +467,7 @@ export default function ReclutamientoPage() {
                 <span className="font-display text-3xl text-brand-gold/90 leading-none">04</span>
                 <span className="h-px flex-1 max-w-16 bg-brand-gold/50" />
                 <p className="text-[10px] font-semibold uppercase tracking-[0.4em] text-brand-gold">
-                  Postulate
+                  Lista de espera
                 </p>
               </div>
 
@@ -476,13 +482,13 @@ export default function ReclutamientoPage() {
               </div>
 
               <h3 className="mt-8 font-display text-5xl uppercase leading-[0.92] tracking-[0.01em] sm:text-6xl lg:text-[5rem]">
-                Contanos por qué{' '}
-                <span className="gold-text">querés formar parte</span>.
+                Dejá tus datos para{' '}
+                <span className="gold-text">próximas vacantes</span>.
               </h3>
 
               <p className="mt-6 max-w-xl font-sans text-lg leading-relaxed text-brand-text/85">
-                Completá el formulario con tus datos y motivaciones. Si encajás con el perfil, nos
-                ponemos en contacto con vos.
+                Completá el formulario con tus datos y motivaciones. Las inscripciones actuales ya
+                finalizaron, pero vamos a priorizar esta lista cuando necesitemos sumar nuevo personal.
               </p>
 
               <div className="mt-9 grid gap-3">
@@ -505,8 +511,8 @@ export default function ReclutamientoPage() {
               <div className="mt-10 hidden rounded-2xl border border-[rgba(212,175,55,0.22)] bg-black/45 p-6 lg:block">
                 <Quote className="h-5 w-5 text-brand-gold/70" />
                 <p className="mt-3 font-sans text-base leading-relaxed text-brand-text/90">
-                  Si vas a tomártelo en serio, este puede ser el lugar donde tu trabajo se
-                  multiplique.
+                  Si querés que te tengamos presente para la próxima búsqueda, este es el lugar para
+                  dejar tu información completa.
                 </p>
                 <p className="mt-3 text-[11px] uppercase tracking-[0.32em] text-brand-gold">
                   — {brand.name}

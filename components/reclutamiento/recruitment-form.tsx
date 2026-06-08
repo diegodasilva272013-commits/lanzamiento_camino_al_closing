@@ -113,7 +113,7 @@ export function RecruitmentForm() {
 
     if (!foto) {
       setStatus('error');
-      setMessage('Subí una foto para completar tu postulación.');
+      setMessage('Subí una foto para completar tu ingreso a la lista de espera.');
       setFotoError('La foto es obligatoria.');
       return;
     }
@@ -131,12 +131,12 @@ export function RecruitmentForm() {
 
       if (!res.ok || !data.ok) {
         setStatus('error');
-        setMessage(data.error ?? 'No pudimos enviar tu postulación. Probá de nuevo.');
+        setMessage(data.error ?? 'No pudimos guardar tus datos en lista de espera. Probá de nuevo.');
         return;
       }
 
       setStatus('success');
-      setMessage('¡Recibimos tu postulación! Si encajás con el perfil, te vamos a contactar.');
+      setMessage('¡Listo! Recibimos tus datos y quedaste en lista de espera. Cuando necesitemos nuevo personal, vamos a priorizar a quienes completaron este formulario.');
       setValues(initialState);
       clearFoto();
     } catch {
@@ -150,7 +150,7 @@ export function RecruitmentForm() {
       <div className="rounded-2xl border border-[rgba(212,175,55,0.35)] bg-black/40 p-8 text-center">
         <CheckCircle2 className="mx-auto h-12 w-12 text-brand-gold" />
         <h4 className="mt-4 font-display text-3xl uppercase tracking-[0.02em] text-brand-text">
-          ¡Postulación enviada!
+          ¡Lista de espera confirmada!
         </h4>
         <p className="mt-3 font-sans text-sm leading-relaxed text-brand-muted">{message}</p>
       </div>
@@ -229,7 +229,7 @@ export function RecruitmentForm() {
           </>
         ) : (
           <>
-            Enviar mi postulación
+            Entrar en lista de espera
             <ArrowRight className="h-4 w-4" />
           </>
         )}
@@ -238,7 +238,7 @@ export function RecruitmentForm() {
       {status === 'error' && message ? <p className="text-sm text-red-400">{message}</p> : null}
 
       <p className="text-xs leading-relaxed text-brand-muted">
-        Al enviar tu postulación aceptás que nos contactemos con vos por los datos que dejaste.
+        Al enviar tus datos aceptás que nos contactemos con vos cuando necesitemos sumar nuevo personal.
       </p>
     </form>
   );
