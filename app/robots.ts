@@ -18,6 +18,10 @@ export default function robots(): MetadataRoute.Robots {
           '/api/reclutamiento',
         ],
       },
+      {
+        userAgent: ['facebookexternalhit', 'Facebot', 'WhatsApp', 'Twitterbot'],
+        allow: '/',
+      },
     ],
     host: 'https://lanzamiento-camino-al-closing.vercel.app',
   };
