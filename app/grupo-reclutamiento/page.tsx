@@ -5,10 +5,36 @@ import { BrandLogo } from '@/components/brand/brand-logo';
 import { RecruitmentGroupTaskForm } from '@/components/reclutamiento/recruitment-group-task-form';
 import { brand } from '@/constants/branding';
 
+const ogImage = 'https://lanzamiento-camino-al-closing.vercel.app/reclutamiento-og.jpg';
+
 export const metadata: Metadata = {
   title: 'Tarea grupo de reclutamiento · Camino al Closing',
   description: 'Formulario interno para el grupo de reclutamiento: líneas, mensajes de apertura, foto y resumen del video.',
   robots: { index: false, follow: false, nocache: true, googleBot: { index: false, follow: false } },
+  openGraph: {
+    type: 'website',
+    url: 'https://lanzamiento-camino-al-closing.vercel.app/grupo-reclutamiento',
+    title: 'Tarea grupo de reclutamiento · Camino al Closing',
+    description: 'Formulario interno para el grupo de reclutamiento: líneas, mensajes de apertura, foto y resumen del video.',
+    siteName: 'Camino al Closing',
+    locale: 'es_AR',
+    images: [
+      {
+        url: ogImage,
+        secureUrl: ogImage,
+        width: 1200,
+        height: 630,
+        alt: 'Grupo de reclutamiento · Camino al Closing',
+        type: 'image/jpeg',
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Tarea grupo de reclutamiento · Camino al Closing',
+    description: 'Formulario interno para el grupo de reclutamiento: líneas, mensajes de apertura, foto y resumen del video.',
+    images: [ogImage],
+  },
 };
 
 const tasks = [
