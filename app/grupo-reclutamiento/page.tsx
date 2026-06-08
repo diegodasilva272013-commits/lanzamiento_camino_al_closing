@@ -59,16 +59,16 @@ export default function GrupoReclutamientoPage() {
                 </div>
               </div>
               <h1 className="mt-8 font-display text-5xl uppercase leading-[0.92] tracking-[0.01em] sm:text-6xl lg:text-7xl">
-                Tarea para entregar <span className="gold-text">mañana</span>
+                Tarea para entregar <span className="gold-text">hoy</span>
               </h1>
               <p className="mt-5 max-w-2xl text-base leading-relaxed text-brand-text/85 sm:text-lg">
-                Completá este formulario antes de mañana a las 11:00 hs Argentina. La reunión es a las 12:00 hs, y esta entrega nos permite llegar con todo ordenado.
+                Completá este formulario antes de hoy a las 11:00 hs Argentina. La reunión es a las 12:00 hs, y esta entrega nos permite llegar con todo ordenado.
               </p>
             </div>
 
             <div className="grid gap-3 sm:grid-cols-2 lg:w-[380px] lg:grid-cols-1">
-              <DeadlineCard icon={CalendarClock} label="Entrega límite" value="Mañana · 11:00 hs" />
-              <DeadlineCard icon={Clock} label="Reunión" value="Mañana · 12:00 hs" />
+              <DeadlineCard icon={CalendarClock} label="Entrega límite" value="Hoy · 11:00 hs" />
+              <DeadlineCard icon={Clock} label="Reunión" value="Hoy · 12:00 hs" />
             </div>
           </div>
         </header>

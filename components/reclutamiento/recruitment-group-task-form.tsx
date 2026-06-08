@@ -176,10 +176,10 @@ export function RecruitmentGroupTaskForm() {
   return (
     <form onSubmit={handleSubmit} className="grid gap-8">
       <section className="rounded-3xl border border-[rgba(212,175,55,0.18)] bg-white/5 p-6 backdrop-blur sm:p-8">
-        <p className="text-xs uppercase tracking-[0.28em] text-brand-gold">Tarea para mañana</p>
+        <p className="text-xs uppercase tracking-[0.28em] text-brand-gold">Tarea para hoy</p>
         <h2 className="mt-2 text-2xl font-semibold text-brand-text">Entrega obligatoria antes de las 11:00 hs</h2>
         <p className="mt-3 text-sm leading-relaxed text-brand-muted">
-          Completá este formulario antes de mañana a las 11:00 hs Argentina. La reunión del grupo es a las 12:00 hs, y vamos a revisar estas entregas antes de entrar.
+          Completá este formulario antes de hoy a las 11:00 hs Argentina. La reunión del grupo es a las 12:00 hs, y vamos a revisar estas entregas antes de entrar.
         </p>
       </section>
 
