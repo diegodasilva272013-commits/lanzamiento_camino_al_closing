@@ -63,9 +63,19 @@ export function BrandingSettersTool({ accessCode }: { accessCode?: string }) {
         setError('error' in data ? data.error : `HTTP ${res.status}`);
         return;
       }
+
+      let framedAvatar = data.avatar;
+      if (framedAvatar) {
+        try {
+          framedAvatar = await applyGoldenCircleFrame(framedAvatar);
+        } catch (frameErr) {
+          console.warn('No se pudo aplicar marco dorado, uso avatar original:', frameErr);
+        }
+      }
+
       setResult({
         setterName: data.setterName,
-        avatar: data.avatar,
+        avatar: framedAvatar,
         banner: data.banner,
         bios: data.bios,
       });
@@ -172,7 +182,7 @@ export function BrandingSettersTool({ accessCode }: { accessCode?: string }) {
           <div className="mt-5 grid gap-6">
             <div>
               <h3 className="text-xs font-semibold uppercase tracking-[0.2em] text-brand-gold">
-                Avatar WhatsApp (1:1)
+                Avatar WhatsApp (círculo dorado)
               </h3>
               {result.avatar ? (
                 <div className="mt-2 grid gap-3">
@@ -267,4 +277,82 @@ function slug(s: string) {
     .replace(/[^a-z0-9]+/g, '-')
     .replace(/(^-|-$)/g, '')
     .slice(0, 40) || 'setter';
+}
+
+/**
+ * Toma un dataURL de imagen y devuelve un PNG cuadrado con la foto
+ * recortada en circulo y un anillo dorado (estilo Camino al Closing).
+ * Hace falta que la imagen sea same-origin o data: para que el canvas
+ * no quede tainted.
+ */
+async function applyGoldenCircleFrame(src: string, size = 1024): Promise<string> {
+  const img = await loadImageEl(src);
+  const canvas = document.createElement('canvas');
+  canvas.width = size;
+  canvas.height = size;
+  const ctx = canvas.getContext('2d');
+  if (!ctx) throw new Error('No 2D context');
+
+  const cx = size / 2;
+  const cy = size / 2;
+  const ringWidth = Math.round(size * 0.028); // ~28px en 1024
+  const outerR = size / 2 - Math.round(size * 0.012);
+  const innerR = outerR - ringWidth - 2;
+
+  // Glow dorado externo suave
+  ctx.save();
+  ctx.shadowColor = 'rgba(212,175,55,0.55)';
+  ctx.shadowBlur = Math.round(size * 0.04);
+  ctx.fillStyle = 'rgba(212,175,55,0.0)';
+  ctx.beginPath();
+  ctx.arc(cx, cy, outerR, 0, Math.PI * 2);
+  ctx.closePath();
+  // truco: dibujar un fill casi transparente para que la sombra se renderice
+  ctx.fillStyle = 'rgba(0,0,0,0.001)';
+  ctx.fill();
+  ctx.restore();
+
+  // Foto recortada en circulo (cover)
+  ctx.save();
+  ctx.beginPath();
+  ctx.arc(cx, cy, innerR, 0, Math.PI * 2);
+  ctx.closePath();
+  ctx.clip();
+
+  const targetD = innerR * 2;
+  const ratio = img.width / img.height;
+  let dw: number;
+  let dh: number;
+  if (ratio >= 1) {
+    dh = targetD;
+    dw = targetD * ratio;
+  } else {
+    dw = targetD;
+    dh = targetD / ratio;
+  }
+  ctx.drawImage(img, cx - dw / 2, cy - dh / 2, dw, dh);
+  ctx.restore();
+
+  // Anillo dorado con gradiente diagonal
+  const grad = ctx.createLinearGradient(0, 0, size, size);
+  grad.addColorStop(0, '#f7dd86');
+  grad.addColorStop(0.5, '#d4af37');
+  grad.addColorStop(1, '#8a6611');
+  ctx.lineWidth = ringWidth;
+  ctx.strokeStyle = grad;
+  ctx.beginPath();
+  ctx.arc(cx, cy, (innerR + outerR) / 2, 0, Math.PI * 2);
+  ctx.stroke();
+
+  return canvas.toDataURL('image/png');
+}
+
+function loadImageEl(src: string): Promise<HTMLImageElement> {
+  return new Promise((resolve, reject) => {
+    const img = new Image();
+    img.crossOrigin = 'anonymous';
+    img.onload = () => resolve(img);
+    img.onerror = () => reject(new Error('No se pudo cargar la imagen'));
+    img.src = src;
+  });
 }
