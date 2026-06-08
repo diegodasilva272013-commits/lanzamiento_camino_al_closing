@@ -8,8 +8,10 @@ export default function robots(): MetadataRoute.Robots {
         allow: '/',
         disallow: [
           '/difusion',
+          '/email-marketing',
           '/setters',
           '/reclutamiento',
+          '/grupo-reclutamiento',
           '/api/admin',
           '/api/difusion',
           '/api/setters',

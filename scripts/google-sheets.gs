@@ -22,6 +22,7 @@ const TIMEZONE = 'America/Argentina/Buenos_Aires';
 
 const REGISTROS_SHEET_NAME = 'Registros';
 const RECLUTAMIENTO_SHEET_NAME = 'Postulaciones Setters';
+const GRUPO_RECLUTAMIENTO_SHEET_NAME = 'Grupo Reclutamiento';
 const FOTOS_FOLDER_NAME = 'Postulaciones Setters - Fotos';
 
 // Paleta de marca
@@ -60,6 +61,24 @@ const RECLUTAMIENTO_HEADERS = [
   'Algo más',
 ];
 
+const GRUPO_RECLUTAMIENTO_HEADERS = [
+  'Fecha',
+  'Nombre',
+  'Apellido',
+  'Celular personal',
+  'Línea 1',
+  'Línea 2',
+  'Línea 3',
+  'Mensaje 1',
+  'Mensaje 2',
+  'Mensaje 3',
+  'Mensaje 4',
+  'Mensaje 5',
+  'Foto',
+  'Video',
+  'Resumen del video',
+];
+
 function doGet() {
   const ss = SpreadsheetApp.openById(SHEET_ID);
   repairReclutamientoFotoFormulas(ss);
@@ -87,6 +106,10 @@ function doPost(e) {
 
     if (data.kind === 'reclutamiento') {
       return appendReclutamiento(data);
+    }
+
+    if (data.kind === 'grupo_reclutamiento') {
+      return appendGrupoReclutamiento(data);
     }
 
     return appendRegistro(data);
@@ -445,6 +468,140 @@ function formatReclutamientoRow(sheet, rowIndex) {
   sheet.getRange(rowIndex, 1).setHorizontalAlignment('center');
   sheet.getRange(rowIndex, 4).setHorizontalAlignment('center');
   sheet.getRange(rowIndex, 7).setHorizontalAlignment('center').setVerticalAlignment('middle');
+}
+
+/* ============ GRUPO DE RECLUTAMIENTO (tarea previa) ============ */
+
+function appendGrupoReclutamiento(data) {
+  const ss = SpreadsheetApp.openById(SHEET_ID);
+
+  let sheet = ss.getSheetByName(GRUPO_RECLUTAMIENTO_SHEET_NAME);
+  if (!sheet) {
+    sheet = ss.insertSheet(GRUPO_RECLUTAMIENTO_SHEET_NAME);
+    setupGrupoReclutamientoSheet(sheet);
+  }
+
+  const now = data.timestamp ? new Date(data.timestamp) : new Date();
+  const fecha = Utilities.formatDate(now, TIMEZONE, 'dd/MM/yyyy HH:mm');
+
+  const lineas = (data.lineas || []).slice(0, 3);
+  while (lineas.length < 3) lineas.push('');
+
+  const mensajes = (data.mensajes || []).slice(0, 5);
+  while (mensajes.length < 5) mensajes.push('');
+
+  let fotoCell = '';
+  let fotoFormula = '';
+  try {
+    const fotoFileId = saveReclutamientoFoto(data);
+    if (fotoFileId) {
+      fotoFormula = '=IMAGE("https://drive.google.com/thumbnail?id=' + fotoFileId + '&sz=w400",4,130,100)';
+      fotoCell = fotoFormula;
+    }
+  } catch (errFoto) {
+    fotoCell = 'Error foto: ' + String(errFoto);
+  }
+
+  const row = [
+    fecha,
+    String(data.nombre || ''),
+    String(data.apellido || ''),
+    String(data.celular || ''),
+    String(lineas[0] || ''),
+    String(lineas[1] || ''),
+    String(lineas[2] || ''),
+    String(mensajes[0] || ''),
+    String(mensajes[1] || ''),
+    String(mensajes[2] || ''),
+    String(mensajes[3] || ''),
+    String(mensajes[4] || ''),
+    '',
+    String(data.videoUrl || 'https://www.youtube.com/watch?v=7RUmzfEaGco'),
+    String(data.resumenVideo || ''),
+  ];
+
+  const targetRow = sheet.getLastRow() + 1;
+
+  sheet.getRange(targetRow, 2, 1, 11).setNumberFormat('@');
+  sheet.getRange(targetRow, 14, 1, 2).setNumberFormat('@');
+  sheet.getRange(targetRow, 1, 1, GRUPO_RECLUTAMIENTO_HEADERS.length).setValues([row]);
+
+  if (fotoCell) {
+    if (fotoFormula) {
+      sheet.getRange(targetRow, 13).setFormula(fotoFormula);
+    } else {
+      sheet.getRange(targetRow, 13).setValue(fotoCell);
+    }
+  }
+
+  formatGrupoReclutamientoRow(sheet, targetRow);
+  sheet.setRowHeight(targetRow, 110);
+
+  return jsonResponse({
+    ok: true,
+    writtenTo: sheet.getName(),
+    totalRows: targetRow,
+    foto: fotoCell ? 'sí' : 'no',
+  });
+}
+
+function setupGrupoReclutamientoSheet(sheet) {
+  const cols = GRUPO_RECLUTAMIENTO_HEADERS.length;
+
+  sheet.getRange(1, 1, 1, cols).merge();
+  sheet.getRange(1, 1)
+    .setValue('Grupo de reclutamiento · Tareas — Camino al Closing')
+    .setBackground(COLOR_GOLD)
+    .setFontColor(COLOR_BLACK)
+    .setFontSize(13)
+    .setFontWeight('bold')
+    .setHorizontalAlignment('center')
+    .setVerticalAlignment('middle');
+  sheet.setRowHeight(1, 34);
+
+  sheet.getRange(2, 1, 1, cols)
+    .setValues([GRUPO_RECLUTAMIENTO_HEADERS])
+    .setBackground(COLOR_HEADER_BG)
+    .setFontColor(COLOR_GOLD)
+    .setFontWeight('bold')
+    .setHorizontalAlignment('center')
+    .setVerticalAlignment('middle');
+  sheet.setRowHeight(2, 26);
+  sheet.setFrozenRows(2);
+
+  sheet.setColumnWidth(1, 130);
+  sheet.setColumnWidth(2, 120);
+  sheet.setColumnWidth(3, 120);
+  sheet.setColumnWidth(4, 150);
+  for (let c = 5; c <= 7; c++) sheet.setColumnWidth(c, 140);
+  for (let c = 8; c <= 12; c++) sheet.setColumnWidth(c, 240);
+  sheet.setColumnWidth(13, 130);
+  sheet.setColumnWidth(14, 230);
+  sheet.setColumnWidth(15, 360);
+
+  const maxCols = sheet.getMaxColumns();
+  if (maxCols > cols) {
+    sheet.deleteColumns(cols + 1, maxCols - cols);
+  }
+}
+
+function formatGrupoReclutamientoRow(sheet, rowIndex) {
+  const cols = GRUPO_RECLUTAMIENTO_HEADERS.length;
+  const range = sheet.getRange(rowIndex, 1, 1, cols);
+
+  range
+    .setVerticalAlignment('top')
+    .setWrap(true)
+    .setBorder(true, true, true, true, true, true, '#e0d6bd', SpreadsheetApp.BorderStyle.SOLID);
+
+  if ((rowIndex - 3) % 2 === 1) {
+    range.setBackground(COLOR_ROW_ALT);
+  } else {
+    range.setBackground('#ffffff');
+  }
+
+  sheet.getRange(rowIndex, 1).setHorizontalAlignment('center');
+  sheet.getRange(rowIndex, 13).setHorizontalAlignment('center').setVerticalAlignment('middle');
 }
 
 /* ============ Helpers ============ */
