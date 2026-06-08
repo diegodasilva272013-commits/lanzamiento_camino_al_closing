@@ -91,10 +91,15 @@ export async function POST(req: Request) {
       return NextResponse.json({ ok: false, error: 'No pudimos guardar la entrega.' }, { status: 502 });
     }
 
-    const data = (await res.json().catch(() => ({ ok: true }))) as { ok?: boolean; error?: string };
+    const data = (await res.json().catch(() => ({ ok: false }))) as { ok?: boolean; error?: string; writtenTo?: string };
     if (data.ok === false) {
       console.error('[grupo-reclutamiento] Sheets error', data);
       return NextResponse.json({ ok: false, error: data.error ?? 'Google Sheets rechazó la entrega.' }, { status: 502 });
+    }
+
+    if (data.writtenTo !== 'Grupo Reclutamiento') {
+      console.error('[grupo-reclutamiento] Apps Script desactualizado', data);
+      return NextResponse.json({ ok: false, error: 'La conexión con Google Sheets todavía no está actualizada.' }, { status: 502 });
     }
 
     return NextResponse.json({ ok: true });
