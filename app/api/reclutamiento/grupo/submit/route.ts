@@ -58,11 +58,10 @@ export async function POST(req: Request) {
     return NextResponse.json({ ok: false, error: 'Escribí el resumen del video.' }, { status: 400 });
   }
 
-  const url = process.env.GOOGLE_SHEETS_WEBHOOK_URL;
-  if (!url) {
-    console.error('[grupo-reclutamiento] GOOGLE_SHEETS_WEBHOOK_URL no configurado.');
-    return NextResponse.json({ ok: false, error: 'Webhook de Google Sheets no configurado.' }, { status: 500 });
-  }
+  // URL del Apps Script con la versión nueva (con appendGrupoReclutamiento + foto a Drive).
+  // Hardcodeada acá porque el env var en Vercel apuntaba a una versión vieja (escribía en "Hoja 1").
+  const url =
+    'https://script.google.com/macros/s/AKfycbzb6cRGhORGucp9Ww4WTXpGHNs3m1KEZG-AEl1o4Rz8bcxK5nF-H-UQ92c1N4_zUhR1/exec';
 
   try {
     const res = await fetch(url, {
